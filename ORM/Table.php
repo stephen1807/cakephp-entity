@@ -828,4 +828,29 @@ class Table extends AppModel {
 		}
 		return $location;
 	}
+
+	protected function _findCount($state, $query, $results = array()) {
+		if ($state == 'before') {
+			$this->_saveEntityState();
+			$this->entity = false;
+			return parent::_findCount($state, $query, $results);
+		}
+
+		$return = parent::_findCount($state, $query, $results);
+		$this->_restoreEntityState();
+		return $return;
+	}
+
+	protected function _findThreaded($state, $query, $results = array()) {
+		if ($state == 'before') {
+			$this->_saveEntityState();
+			$this->entity = false;
+			return parent::_findThreaded($state, $query, $results);
+		}
+
+		$return = parent::_findThreaded($state, $query, $results);
+		$this->_restoreEntityState();
+		return $return;
+	}
+
 }
