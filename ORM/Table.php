@@ -396,7 +396,7 @@ class Table extends AppModel {
 
 /**
  * Table::_bindModel()
- * 
+ *
  * @param mixed $type
  * @param mixed $associated
  * @param mixed $options
@@ -486,7 +486,7 @@ class Table extends AppModel {
 
 /**
  * Table::save()
- * 
+ *
  * @param mixed $entity
  * @param bool $validate
  * @param mixed $fieldList
@@ -518,12 +518,17 @@ class Table extends AppModel {
 
 		$isNew = $entity->isNew();
 		$success = parent::save($entity, $validate, $fieldList);
+
 		if (!$success) {
 			return false;
 		}
 
 		$entity->isNew(false);
-		$entity->set($this->primaryKey(), $this->getInsertID());
+
+		if ($isNew) {
+			$entity->set($this->primaryKey(), $this->getInsertID());
+		}
+
 		return $entity;
 	}
 
@@ -665,7 +670,7 @@ class Table extends AppModel {
 
 /**
  * Table::convertToEntities()
- * 
+ *
  * @param mixed $list
  * @return
  */
@@ -683,7 +688,7 @@ class Table extends AppModel {
 
 /**
  * Table::beforeFind()
- * 
+ *
  * @param mixed $queryData
  * @return
  */
@@ -699,7 +704,7 @@ class Table extends AppModel {
 
 /**
  * Table::afterFind()
- * 
+ *
  * @param mixed $results
  * @param bool $primary
  * @return
@@ -717,7 +722,7 @@ class Table extends AppModel {
 
 /**
  * Table::_saveEntityState()
- * 
+ *
  * @return void
  */
 	protected function _saveEntityState() {
@@ -726,7 +731,7 @@ class Table extends AppModel {
 
 /**
  * Table::_restoreEntityState()
- * 
+ *
  * @return void
  */
 	protected function _restoreEntityState() {
@@ -735,7 +740,7 @@ class Table extends AppModel {
 
 /**
  * Table::_entityClassForData()
- * 
+ *
  * @param mixed $data
  * @return
  */
@@ -745,7 +750,7 @@ class Table extends AppModel {
 
 /**
  * Table::allEntities()
- * 
+ *
  * @param mixed $params
  * @return
  */
@@ -756,7 +761,7 @@ class Table extends AppModel {
 
 /**
  * Table::entities()
- * 
+ *
  * @param mixed $params
  * @return
  */
@@ -766,7 +771,7 @@ class Table extends AppModel {
 
 /**
  * Table::__call()
- * 
+ *
  * @param mixed $method
  * @param mixed $params
  * @return
@@ -785,7 +790,7 @@ class Table extends AppModel {
 
 /**
  * Table::_analyzeMethodName()
- * 
+ *
  * @param mixed $method
  * @return
  */
@@ -818,7 +823,7 @@ class Table extends AppModel {
 
 /**
  * Table::_EntityClassLocation()
- * 
+ *
  * @return
  */
 	protected function _entityClassLocation() {
