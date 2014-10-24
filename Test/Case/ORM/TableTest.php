@@ -403,6 +403,7 @@ class TableTest extends CakeTestCase {
  */
 	public function testFindPersistedEntities() {
 		$table = TableRegistry::get('users');
+		$table->entity = true;
 		$results = $table->find('all');
 		$this->assertCount(4, $results);
 		foreach ($results as $article) {
