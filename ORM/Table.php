@@ -11,13 +11,20 @@ class Table extends AppModel {
 
 	protected $_savedEntityStates = [];
 
+/**
+ * Class constructor
+ *
+ * @param bool|int|string|array $id Set this ID for this model on startup.
+ * @param string $table Name of database table to use.
+ * @param string $ds DataSource connection name.
+ */
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (is_array($id)) {
 			$alias = Hash::get($id, 'alias') ?: (Hash::get($id, 'table') ?: $this->alias);
 			$id['alias'] = Inflector::singularize(preg_replace('/Table$/', '', $alias));
 			$this->name = $this->alias = $this->alias($id['alias']);
-
 			$schema = Hash::get($id, 'schema');
+
 			if ($schema !== null) {
 				$this->_schema = $schema;
 			}
@@ -33,6 +40,7 @@ class Table extends AppModel {
 			}
 			$table = Inflector::tableize(preg_replace('/Table$/', '', $this->alias));
 		}
+
 		parent::__construct($id, $table, $ds);
 		$this->entityClass(Inflector::singularize($this->name) . 'Entity');
 		$this->initialize([]);
@@ -98,7 +106,7 @@ class Table extends AppModel {
 /**
  * Returns the table alias or sets a new one
  *
- * @param string $table the new table alias
+ * @param string $alias the new table alias
  * @return string
  */
 	public function alias($alias = null) {
@@ -396,7 +404,7 @@ class Table extends AppModel {
 
 /**
  * Table::_bindModel()
- * 
+ *
  * @param mixed $type
  * @param mixed $associated
  * @param mixed $options
@@ -486,7 +494,7 @@ class Table extends AppModel {
 
 /**
  * Table::save()
- * 
+ *
  * @param mixed $entity
  * @param bool $validate
  * @param mixed $fieldList
@@ -516,14 +524,19 @@ class Table extends AppModel {
 			return false;
 		}
 
-		$isNew = $entity->isNew();
 		$success = parent::save($entity, $validate, $fieldList);
+		$insertedId = $this->getInsertID();
+
 		if (!$success) {
 			return false;
 		}
 
 		$entity->isNew(false);
-		$entity->set($this->primaryKey(), $this->getInsertID());
+
+		if (!empty($insertedId)) {
+			$entity->set($this->primaryKey(), $this->getInsertID());
+		}
+
 		return $entity;
 	}
 
@@ -665,7 +678,7 @@ class Table extends AppModel {
 
 /**
  * Table::convertToEntities()
- * 
+ *
  * @param mixed $list
  * @return
  */
@@ -683,7 +696,7 @@ class Table extends AppModel {
 
 /**
  * Table::beforeFind()
- * 
+ *
  * @param mixed $queryData
  * @return
  */
@@ -699,7 +712,7 @@ class Table extends AppModel {
 
 /**
  * Table::afterFind()
- * 
+ *
  * @param mixed $results
  * @param bool $primary
  * @return
@@ -717,7 +730,7 @@ class Table extends AppModel {
 
 /**
  * Table::_saveEntityState()
- * 
+ *
  * @return void
  */
 	protected function _saveEntityState() {
@@ -726,7 +739,7 @@ class Table extends AppModel {
 
 /**
  * Table::_restoreEntityState()
- * 
+ *
  * @return void
  */
 	protected function _restoreEntityState() {
@@ -735,7 +748,7 @@ class Table extends AppModel {
 
 /**
  * Table::_entityClassForData()
- * 
+ *
  * @param mixed $data
  * @return
  */
@@ -745,7 +758,7 @@ class Table extends AppModel {
 
 /**
  * Table::allEntities()
- * 
+ *
  * @param mixed $params
  * @return
  */
@@ -756,7 +769,7 @@ class Table extends AppModel {
 
 /**
  * Table::entities()
- * 
+ *
  * @param mixed $params
  * @return
  */
@@ -766,7 +779,7 @@ class Table extends AppModel {
 
 /**
  * Table::__call()
- * 
+ *
  * @param mixed $method
  * @param mixed $params
  * @return
@@ -785,7 +798,7 @@ class Table extends AppModel {
 
 /**
  * Table::_analyzeMethodName()
- * 
+ *
  * @param mixed $method
  * @return
  */
@@ -818,7 +831,7 @@ class Table extends AppModel {
 
 /**
  * Table::_EntityClassLocation()
- * 
+ *
  * @return
  */
 	protected function _entityClassLocation() {

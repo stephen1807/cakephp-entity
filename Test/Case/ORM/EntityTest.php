@@ -55,7 +55,7 @@ class EntityTest extends CakeTestCase {
 		$entity = $this->getMock('Entity', ['setName']);
 		$entity->expects($this->once())->method('setName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback(function ($name) {
 				$this->assertEquals('Jones', $name);
 				return 'Dr. ' . $name;
 			}));
@@ -73,13 +73,13 @@ class EntityTest extends CakeTestCase {
 		$entity->accessible('*', true);
 		$entity->expects($this->once())->method('setName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback( function($name) {
 				$this->assertEquals('Jones', $name);
 				return 'Dr. ' . $name;
 			}));
 		$entity->expects($this->once())->method('setStuff')
 			->with(['a', 'b'])
-			->will($this->returnCallback(function($stuff) {
+			->will($this->returnCallback(function ($stuff) {
 				$this->assertEquals(['a', 'b'], $stuff);
 				return ['c', 'd'];
 			}));
@@ -169,7 +169,7 @@ class EntityTest extends CakeTestCase {
 		$entity = $this->getMock('Entity', ['getName']);
 		$entity->expects($this->once())->method('getName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback(function ($name) {
 				$this->assertSame('Jones', $name);
 				return 'Dr. ' . $name;
 			}));
@@ -199,7 +199,7 @@ class EntityTest extends CakeTestCase {
 		$entity = $this->getMock('Entity', ['setName']);
 		$entity->expects($this->once())->method('setName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback(function ($name) {
 				$this->assertEquals('Jones', $name);
 				return 'Dr. ' . $name;
 			}));
@@ -216,7 +216,7 @@ class EntityTest extends CakeTestCase {
 		$entity = $this->getMock('Entity', ['getName']);
 		$entity->expects($this->once())->method('getName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback(function ($name) {
 				$this->assertSame('Jones', $name);
 				return 'Dr. ' . $name;
 			}));

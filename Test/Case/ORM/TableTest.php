@@ -257,7 +257,7 @@ class TableTest extends CakeTestCase {
  * Handy variable containing the next primary key that will be inserted in the
  * users table
  *
- * @var integer
+ * @var int
  */
 	public static $nextUserId = 5;
 
@@ -403,6 +403,7 @@ class TableTest extends CakeTestCase {
  */
 	public function testFindPersistedEntities() {
 		$table = TableRegistry::get('users');
+		$table->entity = true;
 		$results = $table->find('all');
 		$this->assertCount(4, $results);
 		foreach ($results as $article) {
