@@ -257,7 +257,7 @@ class TableTest extends CakeTestCase {
  * Handy variable containing the next primary key that will be inserted in the
  * users table
  *
- * @var integer
+ * @var int
  */
 	public static $nextUserId = 5;
 
