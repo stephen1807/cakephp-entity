@@ -11,13 +11,20 @@ class Table extends AppModel {
 
 	protected $_savedEntityStates = [];
 
+/**
+ * Class constructor
+ *
+ * @param bool|int|string|array $id Set this ID for this model on startup.
+ * @param string $table Name of database table to use.
+ * @param string $ds DataSource connection name.
+ */
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (is_array($id)) {
 			$alias = Hash::get($id, 'alias') ?: (Hash::get($id, 'table') ?: $this->alias);
 			$id['alias'] = Inflector::singularize(preg_replace('/Table$/', '', $alias));
 			$this->name = $this->alias = $this->alias($id['alias']);
-
 			$schema = Hash::get($id, 'schema');
+
 			if ($schema !== null) {
 				$this->_schema = $schema;
 			}
@@ -33,6 +40,7 @@ class Table extends AppModel {
 			}
 			$table = Inflector::tableize(preg_replace('/Table$/', '', $this->alias));
 		}
+
 		parent::__construct($id, $table, $ds);
 		$this->entityClass(Inflector::singularize($this->name) . 'Entity');
 		$this->initialize([]);
@@ -98,7 +106,7 @@ class Table extends AppModel {
 /**
  * Returns the table alias or sets a new one
  *
- * @param string $table the new table alias
+ * @param string $alias the new table alias
  * @return string
  */
 	public function alias($alias = null) {
@@ -516,8 +524,8 @@ class Table extends AppModel {
 			return false;
 		}
 
-		$isNew = $entity->isNew();
 		$success = parent::save($entity, $validate, $fieldList);
+		$insertedId = $this->getInsertID();
 
 		if (!$success) {
 			return false;
@@ -525,7 +533,7 @@ class Table extends AppModel {
 
 		$entity->isNew(false);
 
-		if ($isNew) {
+		if (!empty($insertedId)) {
 			$entity->set($this->primaryKey(), $this->getInsertID());
 		}
 
