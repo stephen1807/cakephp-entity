@@ -806,7 +806,7 @@ class Table extends AppModel {
  * Table::_analyzeMethodName()
  *
  * @param mixed $method
- * @return
+ * @return array
  */
 	protected function _analyzeMethodName($method) {
 		$entity = false;
@@ -827,6 +827,10 @@ class Table extends AppModel {
  *
  *    $Model->save($entity);
  *
+ * @param string|array|SimpleXmlElement|DomNode $one Array or string of data
+ * @param string $two Value string for the alternative indata method
+ * @return array Data with all of $one's keys and values
+ * @link http://book.cakephp.org/2.0/en/models/saving-your-data.html
  */
 	public function set($one, $two = null) {
 		if ($one instanceof Entity) {
@@ -838,7 +842,7 @@ class Table extends AppModel {
 /**
  * Table::_EntityClassLocation()
  *
- * @return
+ * @return string
  */
 	protected function _entityClassLocation() {
 		$location = 'Model/Entity';
@@ -848,7 +852,16 @@ class Table extends AppModel {
 		return $location;
 	}
 
-	protected function _findCount($state, $query, $results = array()) {
+/**
+ * Ensures a _findCount call does not return entities
+ *
+ * @param string $state Either "before" or "after"
+ * @param array $query Query.
+ * @param array $results Results.
+ * @return array
+ * @see Model::find()
+ */
+	protected function _findCount($state, $query, $results = []) {
 		if ($state == 'before') {
 			$this->_saveEntityState();
 			$this->entity = false;
@@ -860,7 +873,16 @@ class Table extends AppModel {
 		return $return;
 	}
 
-	protected function _findThreaded($state, $query, $results = array()) {
+/**
+ * Ensures a _findThreaded call does not return entities
+ *
+ * @param string $state Either "before" or "after"
+ * @param array $query Query.
+ * @param array $results Results.
+ * @return array
+ * @see Model::find()
+ */
+	protected function _findThreaded($state, $query, $results = []) {
 		if ($state == 'before') {
 			$this->_saveEntityState();
 			$this->entity = false;

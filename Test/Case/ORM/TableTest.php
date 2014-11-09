@@ -37,18 +37,18 @@ class Author extends TestEntityModel {
 
 	public $name = 'Author';
 
-	public $hasOne = array(
-		'Image' => array(
+	public $hasOne = [
+		'Image' => [
 			'className' => 'Image',
-		),
-	);
+		],
+	];
 
-	public $hasMany = array(
+	public $hasMany = [
 		'Post',
-		'Comment' => array(
+		'Comment' => [
 			'className' => 'Comment',
-		),
-	);
+		],
+	];
 
 }
 
@@ -56,29 +56,29 @@ class Post extends TestEntityModel {
 
 	public $name = 'Post';
 
-	public $belongsTo = array(
+	public $belongsTo = [
 		'Author',
-	);
+	];
 
-	public $hasOne = array(
-		'Image' => array(
+	public $hasOne = [
+		'Image' => [
 			'className' => 'Image',
-		),
-	);
+		],
+	];
 
-	public $hasMany = array(
-		'Comment' => array(
+	public $hasMany = [
+		'Comment' => [
 			'className' => 'Comment',
-		),
-		'Star' => array(
+		],
+		'Star' => [
 			'className' => 'Star',
-		),
-	);
+		],
+	];
 
 /**
  *  dummy implementation of find().
  */
-	public function find($type = 'first', $query = array()) {
+	public function find($type = 'first', $query = []) {
 		$result = null;
 
 		$this->beforeFind($query);
@@ -116,9 +116,9 @@ class Image extends TestEntityModel {
 
 	public $name = 'Image';
 
-	public $belongsTo = array(
+	public $belongsTo = [
 		'Post',
-	);
+	];
 
 }
 
@@ -126,9 +126,9 @@ class Comment extends TestEntityModel {
 
 	public $name = 'Comment';
 
-	public $belongsTo = array(
+	public $belongsTo = [
 		'Post',
-	);
+	];
 
 }
 
@@ -138,9 +138,9 @@ class Star extends AppModel {
 
 	public $useTable = false;
 
-	public $belongsTo = array(
+	public $belongsTo = [
 		'Post',
-	);
+	];
 
 }
 
@@ -162,89 +162,89 @@ class CommentEntity extends Entity {
 
 class SampleData {
 
-	public static $simpleData = array(
-		'Post' => array(
+	public static $simpleData = [
+		'Post' => [
 			'id' => 123,
 			'title' => 'Hello',
-		),
-	);
+		],
+	];
 
-	public static $associatedData = array(
-		'Post' => array(
+	public static $associatedData = [
+		'Post' => [
 			'id' => 123,
 			'title' => 'Hello',
 			'author_id' => 345,
-		),
-		'Author' => array(
+		],
+		'Author' => [
 			'id' => 345,
 			'name' => 'Bob',
-		),
-		'Image' => array(
+		],
+		'Image' => [
 			'id' => 234,
 			'post_id' => 123,
 			'path' => '/path/to/image.jpg',
-		),
-		'Comment' => array(
-			array(
+		],
+		'Comment' => [
+			[
 				'id' => 101,
 				'post_id' => 123,
 				'comment' => 'hello',
-			),
-			array(
+			],
+			[
 				'id' => 102,
 				'post_id' => 123,
 				'comment' => 'world',
-			),
-			array(
+			],
+			[
 				'id' => 103,
 				'post_id' => 123,
 				'comment' => 'again',
-			),
-		),
-		'Star' => array(
-			array(
+			],
+		],
+		'Star' => [
+			[
 				'id' => 201,
 				'post_id' => 123,
 				'point' => 1,
-			),
-			array(
+			],
+			[
 				'id' => 202,
 				'post_id' => 123,
 				'point' => 3,
-			),
-		),
-	);
+			],
+		],
+	];
 
-	public static $emptyHasManyData = array(
-		'Post' => array(
+	public static $emptyHasManyData = [
+		'Post' => [
 			'id' => 123,
 			'title' => 'Hello',
 			'author_id' => 345,
-		),
-		'Comment' => array(
-		),
-	);
+		],
+		'Comment' => [
+		],
+	];
 
-	public static $arrayOfData = array(
-		array(
-			'Post' => array(
+	public static $arrayOfData = [
+		[
+			'Post' => [
 				'id' => 123,
 				'title' => 'Hello',
-			),
-		),
-		array(
-			'Post' => array(
+			],
+		],
+		[
+			'Post' => [
 				'id' => 124,
 				'title' => 'world',
-			),
-		),
-		array(
-			'Post' => array(
+			],
+		],
+		[
+			'Post' => [
 				'id' => 125,
 				'title' => 'again',
-			),
-		),
-	);
+			],
+		],
+	];
 
 }
 
@@ -261,7 +261,7 @@ class TableTest extends CakeTestCase {
  */
 	public static $nextUserId = 5;
 
-	public $fixtures = array('plugin.entity.user');
+	public $fixtures = ['plugin.entity.user'];
 
 	public function startTest($method) {
 		$this->Post = ClassRegistry::init('Post');
@@ -435,13 +435,13 @@ class TableTest extends CakeTestCase {
 			'password' => 'root',
 			'created' => '2013-10-10 00:00:00',
 			'updated' => '2013-10-10 00:00:00',
-		], array('className' => 'UserEntity'));
+		], ['className' => 'UserEntity']);
 
 		$table = TableRegistry::get('users');
 		$this->assertSame($entity, $table->save($entity));
 		$this->assertEquals(self::$nextUserId, $entity->id);
 
-		$row = $table->find('first', array('conditions' => array('id' => self::$nextUserId)));
+		$row = $table->find('first', ['conditions' => ['id' => self::$nextUserId]]);
 		$this->assertEquals($entity->toArray(), $row->toArray());
 	}
 
@@ -452,7 +452,7 @@ class TableTest extends CakeTestCase {
  * @return void
  */
 	public function testSaveNewEmptyEntity() {
-		$entity = new Entity(array(), array('className' => 'UserEntity'));
+		$entity = new Entity([], ['className' => 'UserEntity']);
 		$table = TableRegistry::get('users');
 		$this->assertFalse($table->save($entity));
 	}
@@ -471,19 +471,19 @@ class TableTest extends CakeTestCase {
 			'crazyness' => 'super crazy value',
 			'created' => '2013-10-10 00:00:00',
 			'updated' => '2013-10-10 00:00:00',
-		], array('className' => 'UserEntity'));
+		], ['className' => 'UserEntity']);
 		$table = TableRegistry::get('users');
 		$this->assertSame($entity, $table->save($entity));
 		$this->assertEquals($entity->id, self::$nextUserId);
 
-		$row = $table->find('first', array('conditions' => array('id' => self::$nextUserId)));
+		$row = $table->find('first', ['conditions' => ['id' => self::$nextUserId]]);
 		$entity->unsetProperty('crazyness');
 		$this->assertEquals($entity->toArray(), $row->toArray());
 	}
 
 	public function testEntityCreation() {
 		// 1. create entity. It must be instance of PostEntity.
-		$s1 = $this->Post->newEntity(array());
+		$s1 = $this->Post->newEntity([]);
 		$this->assertTrue(is_a($s1, 'PostEntity'));
 
 		// 2. create entity with data. Properties can be accessed.
@@ -537,21 +537,21 @@ class TableTest extends CakeTestCase {
 		$this->assertEqual($result['Post']['title'], 'Hello');
 
 		// 2. OK, let's roll.
-		$s1 = $this->Post->find('first', array('entity' => true));
+		$s1 = $this->Post->find('first', ['entity' => true]);
 		$this->assertTrue(is_a($s1, 'PostEntity'));
 
 		// 3. find all.
-		$result = $this->Post->find('all', array('entity' => true));
+		$result = $this->Post->find('all', ['entity' => true]);
 		$this->assertTrue(is_array($result));
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(is_a($result[0], 'PostEntity'));
 		$this->assertEqual($result[2]->title, 'again');
 
 		// 4. find all with empty result.
-		$result = $this->Post->find('all', array(
+		$result = $this->Post->find('all', [
 			'entity' => true,
-			'result' => array(),
-		));
+			'result' => [],
+		]);
 		$this->assertTrue(is_array($result));
 		$this->assertEqual(count($result), 0);
 	}
@@ -597,7 +597,7 @@ class TableTest extends CakeTestCase {
 	}
 
 	public function testEntityArrayAccess() {
-		$s = $this->Post->newEntity(array());
+		$s = $this->Post->newEntity([]);
 
 		// 1. Simple array access.
 		$s->name = 'Hello';
@@ -629,7 +629,7 @@ class TableTest extends CakeTestCase {
  *  when it used as string.
  */
 	public function testStringReplesentationOfEntity() {
-		$a = $this->Author->newEntity(array());
+		$a = $this->Author->newEntity([]);
 
 		// 1. empty entity
 		$expected = '<div class="AuthorEntity"></div>';
@@ -653,55 +653,55 @@ class TableTest extends CakeTestCase {
  */
 	public function testEntityToArray() {
 		// 1. simple data
-		$data = array(
-			'Author' => array(
+		$data = [
+			'Author' => [
 				'name' => 'Basuke',
 				'programmer' => 'Programmer',
-			),
-		);
+			],
+		];
 
 		$author = $this->Author->newEntity($data);
 		$reversed = $author->toArray();
 		$this->assertEqual($reversed, $data);
 
 		// 2. has many
-		$data = array(
-			'Author' => array(
+		$data = [
+			'Author' => [
 				'id' => '123',
 				'name' => 'Basuke',
 				'programmer' => 'Programmer',
-			),
-			'Comment' => array(
-				array(
+			],
+			'Comment' => [
+				[
 					'id' => '1',
 					'author_id' => '123',
 					'comment' => 'Hello',
-				),
-				array(
+				],
+				[
 					'id' => '2',
 					'author_id' => '123',
 					'comment' => 'World',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		$author = $this->Author->newEntity($data);
 		$reversed = $author->toArray();
 		$this->assertEqual($reversed, $data);
 
 		// 3. has one
-		$data = array(
-			'Author' => array(
+		$data = [
+			'Author' => [
 				'id' => '123',
 				'name' => 'Basuke',
 				'programmer' => 'Programmer',
-			),
-			'Image' => array(
+			],
+			'Image' => [
 				'id' => '1',
 				'author_id' => '123',
 				'url' => 'Hello',
-			),
-		);
+			],
+		];
 
 		$author = $this->Author->newEntity($data);
 		$reversed = $author->toArray();
