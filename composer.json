@@ -31,6 +31,7 @@
     "issues":"https://github.com/josegonzalez/cakephp-entity/issues"
   },
   "require":{
+    "php": ">=5.4",
     "composer/installers":"*"
   },
   "extra": {
