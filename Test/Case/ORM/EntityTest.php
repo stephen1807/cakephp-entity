@@ -73,7 +73,7 @@ class EntityTest extends CakeTestCase {
 		$entity->accessible('*', true);
 		$entity->expects($this->once())->method('setName')
 			->with('Jones')
-			->will($this->returnCallback(function($name) {
+			->will($this->returnCallback(function ($name) {
 				$this->assertEquals('Jones', $name);
 				return 'Dr. ' . $name;
 			}));

@@ -703,25 +703,27 @@ class Table extends AppModel {
 /**
  * Table::beforeFind()
  *
- * @param mixed $queryData
- * @return
+ * @param array $query Data used to execute this query, i.e. conditions, order, etc.
+ * @return mixed true if the operation should continue, false if it should abort; or, modified
+ *  $query to continue with new $query
+ * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforefind
  */
-	public function beforeFind($queryData) {
+	public function beforeFind($query) {
 		$this->_saveEntityState();
 
-		if (isset($queryData['entity'])) {
-			$this->entity = $queryData['entity'];
+		if (isset($query['entity'])) {
+			$this->entity = $query['entity'];
 		}
 
-		return parent::beforeFind($queryData);
+		return parent::beforeFind($query);
 	}
 
 /**
  * Table::afterFind()
  *
- * @param mixed $results
- * @param bool $primary
- * @return
+ * @param mixed $results The results of the find operation
+ * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed Result of the find operation
  */
 	public function afterFind($results, $primary = false) {
 		$results = parent::afterFind($results, $primary);
@@ -755,8 +757,8 @@ class Table extends AppModel {
 /**
  * Table::_entityClassForData()
  *
- * @param mixed $data
- * @return
+ * @param mixed $data array of data
+ * @return string
  */
 	protected function _entityClassForData($data) {
 		return $this->entityClass();
@@ -765,8 +767,8 @@ class Table extends AppModel {
 /**
  * Table::allEntities()
  *
- * @param mixed $params
- * @return
+ * @param mixed $params Parameters for the method.
+ * @return array
  */
 	public function allEntities($params = []) {
 		$params['entity'] = true;
@@ -776,8 +778,8 @@ class Table extends AppModel {
 /**
  * Table::entities()
  *
- * @param mixed $params
- * @return
+ * @param mixed $params Parameters for the method.
+ * @return array
  */
 	public function entities($params = []) {
 		return $this->allEntities($params);
@@ -786,9 +788,9 @@ class Table extends AppModel {
 /**
  * Table::__call()
  *
- * @param mixed $method
- * @param mixed $params
- * @return
+ * @param string $method Name of method to call.
+ * @param array $params Parameters for the method.
+ * @return mixed Whatever is returned by called method
  */
 	public function __call($method, $params) {
 		list($entity, $method) = $this->_analyzeMethodName($method);
@@ -805,7 +807,7 @@ class Table extends AppModel {
 /**
  * Table::_analyzeMethodName()
  *
- * @param mixed $method
+ * @param mixed $method name of method to analyze
  * @return array
  */
 	protected function _analyzeMethodName($method) {

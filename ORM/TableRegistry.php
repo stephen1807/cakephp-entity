@@ -177,7 +177,7 @@ class TableRegistry {
  * Check to see if an instance exists in the registry.
  *
  * @param string $alias The alias to check for.
- * @return boolean
+ * @return bool
  */
 	public static function exists($alias) {
 		return isset(static::$_instances[$alias]);
@@ -187,7 +187,7 @@ class TableRegistry {
  * Set an instance.
  *
  * @param string $alias The alias to set.
- * @param Cake\ORM\Table The table to set.
+ * @param Cake\ORM\Table $object The table to set.
  * @return void
  */
 	public static function set($alias, Table $object) {
