@@ -524,6 +524,12 @@ class Table extends AppModel {
 			return false;
 		}
 
+		if ($entity->isNew() === false) {
+			$entity->unsetProperty(['modified', 'updated']);
+		} else {
+			$entity->unsetProperty(['created', 'modified', 'updated']);
+		}
+
 		$success = parent::save($entity, $validate, $fieldList);
 		$insertedId = $this->getInsertID();
 
