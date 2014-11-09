@@ -405,10 +405,11 @@ class Table extends AppModel {
 /**
  * Table::_bindModel()
  *
- * @param mixed $type
- * @param mixed $associated
- * @param mixed $options
- * @return
+ * @param mixed $type type of relation to create
+ * @param string $associated the alias for the target table. This is used to
+ * uniquely identify the association
+ * @param array $options list of options to configure the association definition
+ * @return bool Success
  */
 	protected function _bindModel($type, $associated, array $options = []) {
 		$reset = empty($options['reset']) ? true : false;
@@ -434,7 +435,7 @@ class Table extends AppModel {
  * $article = $articles->get($id, ['contain' => ['Comments]]);
  * }}}
  *
- * @param mixed primary key value to find
+ * @param mixed $primaryKey primary key value to find
  * @param array $options options accepted by `Table::find()`
  * @throws NotFoundException if the record with such id could not be found
  * @return \Cake\ORM\Entity
@@ -478,7 +479,7 @@ class Table extends AppModel {
  * conditions.
  *
  * @param array $conditions list of conditions to pass to the query
- * @return boolean
+ * @return bool
  */
 	public function exists($conditions = null) {
 		if (!is_array($conditions)) {
@@ -495,10 +496,19 @@ class Table extends AppModel {
 /**
  * Table::save()
  *
- * @param mixed $entity
- * @param bool $validate
- * @param mixed $fieldList
- * @return
+ * @param array $entity Data to save, as either entity or array
+ * @param bool|array $validate Either a boolean, or an array.
+ *   If a boolean, indicates whether or not to validate before saving.
+ *   If an array, can have following keys:
+ *
+ *   - validate: Set to true/false to enable or disable validation.
+ *   - fieldList: An array of fields you want to allow for saving.
+ *   - callbacks: Set to false to disable callbacks. Using 'before' or 'after'
+ *      will enable only those callbacks.
+ *   - `counterCache`: Boolean to control updating of counter caches (if any)
+ *
+ * @param array $fieldList List of fields to allow to be saved
+ * @return mixed On success Model::$data if its not empty or true, false on failure
  */
 	public function save($entity = null, $validate = true, $fieldList = []) {
 		if (!is_object($entity) || !($entity instanceof $entity)) {
@@ -552,7 +562,7 @@ class Table extends AppModel {
  * Override this method if you want a table object to use custom
  * marshalling logic.
  *
- * @param boolean $safe Whether or not this marshaller
+ * @param bool $safe Whether or not this marshaller
  *   should be in safe mode.
  * @return Cake\ORM\Marhsaller;
  * @see Cake\ORM\Marshaller
@@ -603,6 +613,7 @@ class Table extends AppModel {
  * @param array $data The data to build an entity with.
  * @param array $associations A whitelist of associations
  *   to hydrate. Defaults to all associations
+ * @return void
  * @throws Exception Method 'newEntity' not fully implemented
  */
 	public function newEntity(array $data, $associations = null) {
@@ -659,6 +670,7 @@ class Table extends AppModel {
  * @param array $data The data to build an entity with.
  * @param array $associations A whitelist of associations
  *   to hydrate. Defaults to all associations
+ * @return void
  * @throws Exception Method 'newEntities' not implemented
  */
 	public function newEntities(array $data, $associations = null) {
@@ -668,7 +680,7 @@ class Table extends AppModel {
 /**
  * Convert passed $data structure into coresponding entity object.
  *
- * @param $data Hash to be converted. If omitted, $this->data will be converted.
+ * @param array $data Hash to be converted. If omitted, $this->data will be converted.
  * @return Entity object
  */
 	public function convertToEntity($data) {
@@ -685,8 +697,8 @@ class Table extends AppModel {
 /**
  * Table::convertToEntities()
  *
- * @param mixed $list
- * @return
+ * @param mixed $list an array or list of data to convert into entities
+ * @return array
  */
 	public function convertToEntities($list) {
 		if ($list && !Hash::numeric(array_keys($list))) {
