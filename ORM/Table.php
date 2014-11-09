@@ -547,6 +547,17 @@ class Table extends AppModel {
 			return false;
 		}
 
+		if (is_array($success)) {
+			$alias = $this->alias();
+			$dateFields = ['created', 'modified', 'updated'];
+			foreach ($dateFields as $field) {
+				$value = Hash::get($success, "{$alias}.{$field}", null);
+				if ($value !== null) {
+					$entity->set($field, $value);
+				}
+			}
+		}
+
 		$entity->isNew(false);
 
 		if (!empty($insertedId)) {
