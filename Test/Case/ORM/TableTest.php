@@ -433,8 +433,8 @@ class TableTest extends CakeTestCase {
 		$entity = new Entity([
 			'username' => 'superuser',
 			'password' => 'root',
-			'created' => '2013-10-10 00:00:00',
-			'updated' => '2013-10-10 00:00:00',
+			'created' => self::date(),
+			'updated' => self::date(),
 		], ['className' => 'UserEntity']);
 
 		$table = TableRegistry::get('users');
@@ -469,8 +469,8 @@ class TableTest extends CakeTestCase {
 			'username' => 'superuser',
 			'password' => 'root',
 			'crazyness' => 'super crazy value',
-			'created' => '2013-10-10 00:00:00',
-			'updated' => '2013-10-10 00:00:00',
+			'created' => self::date(),
+			'updated' => self::date(),
 		], ['className' => 'UserEntity']);
 		$table = TableRegistry::get('users');
 		$this->assertSame($entity, $table->save($entity));
