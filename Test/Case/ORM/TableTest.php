@@ -441,7 +441,10 @@ class TableTest extends CakeTestCase {
 		$this->assertSame($entity, $table->save($entity));
 		$this->assertEquals(self::$nextUserId, $entity->id);
 
-		$row = $table->find('first', ['conditions' => ['id' => self::$nextUserId]]);
+		$row = $table->find('first', [
+			'conditions' => ['id' => self::$nextUserId],
+			'entity' => true,
+		]);
 		$this->assertEquals($entity->toArray(), $row->toArray());
 	}
 
@@ -476,7 +479,10 @@ class TableTest extends CakeTestCase {
 		$this->assertSame($entity, $table->save($entity));
 		$this->assertEquals($entity->id, self::$nextUserId);
 
-		$row = $table->find('first', ['conditions' => ['id' => self::$nextUserId]]);
+		$row = $table->find('first', [
+			'conditions' => ['id' => self::$nextUserId],
+			'entity' => true,
+		]);
 		$entity->unsetProperty('crazyness');
 		$this->assertEquals($entity->toArray(), $row->toArray());
 	}
