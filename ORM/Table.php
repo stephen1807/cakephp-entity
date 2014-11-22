@@ -452,7 +452,7 @@ class Table extends AppModel {
  * @return bool Success
  */
 	protected function _bindModel($type, $associated, array $options = []) {
-		$reset = empty($options['reset']) ? true : false;
+		$reset = isset($options['reset']) ? $options['reset'] : false;
 		if (isset($options['reset'])) {
 			unset($options['reset']);
 		}
@@ -664,10 +664,12 @@ class Table extends AppModel {
  * @param array $data The data to build an entity with.
  * @param array $associations A whitelist of associations
  *   to hydrate. Defaults to all associations
+ * @param bool $useSetters Whether or not to use entity
+ *   set methods. Defaults to true
  * @return void
  * @throws Exception Method 'newEntity' not fully implemented
  */
-	public function newEntity(array $data, $associations = null) {
+	public function newEntity(array $data, $associations = null, $useSetters = true) {
 		if ($associations !== null) {
 			throw new Exception("Method 'newEntity' not fully implemented");
 		}
@@ -692,7 +694,10 @@ class Table extends AppModel {
 			$data = $entityData;
 		}
 
-		$entity = new $class($data, ['className' => $className]);
+		$entity = new $class($data, [
+			'className' => $className,
+			'useSetters' => $useSetters,
+		]);
 		return $entity;
 	}
 
@@ -739,7 +744,7 @@ class Table extends AppModel {
 			return null;
 		}
 
-		$entity = $this->newEntity($data);
+		$entity = $this->newEntity($data, null, false);
 		$entity->isNew(false);
 		$entity->clean();
 		return $entity;
