@@ -248,15 +248,31 @@ class Table extends AppModel {
 	}
 
 /**
- * Get the list of Behaviors loaded.
+ * Removes a behavior from this table's behavior registry.
  *
- * This method will return the *aliases* of the behaviors attached
- * to this instance.
+ * Example:
  *
- * @return array
+ * Remove a behavior from this table.
+ *
+ * {{{
+ * $this->removeBehavior('Tree');
+ * }}}
+ *
+ * @param string $name The alias that the behavior was added with.
+ * @return void
+ * @see \Cake\ORM\Behavior
+ */
+	public function removeBehavior($name) {
+		$this->Behaviors->unload($name);
+	}
+
+/**
+ * Returns the behavior registry for this table.
+ *
+ * @return BehaviorCollection
  */
 	public function behaviors() {
-		$this->Behaviors->loaded();
+		$this->Behaviors;
 	}
 
 /**
@@ -941,6 +957,25 @@ class Table extends AppModel {
 		$return = parent::_findThreaded($state, $query, $results);
 		$this->_restoreEntityState();
 		return $return;
+	}
+
+/**
+ * Returns an array that can be used to describe the internal state of this
+ * object.
+ *
+ * @return array
+ */
+	public function __debugInfo() {
+		$conn = $this->connection();
+		return [
+			'table' => $this->table(),
+			'alias' => $this->alias(),
+			'entityClass' => $this->entityClass(),
+			'associations' => $this->_associations->keys(),
+			'behaviors' => $this->behaviors()->loaded(),
+			'defaultConnection' => $this->defaultConnectionName(),
+			'connectionName' => $conn ? $conn->configName() : null
+		];
 	}
 
 }
