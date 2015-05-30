@@ -265,7 +265,7 @@ class Entity implements ArrayAccess, JsonSerializable {
 				continue;
 			}
 
-			$setter = 'set' . Inflector::camelize($p);
+			$setter = '_set' . Inflector::camelize($p);
 			if ($this->_methodExists($setter)) {
 				$value = $this->{$setter}($value);
 			}
@@ -328,7 +328,7 @@ class Entity implements ArrayAccess, JsonSerializable {
  * @return mixed
  */
 	public function &get($property) {
-		$method = 'get' . Inflector::camelize($property);
+		$method = '_get' . Inflector::camelize($property);
 		$value = null;
 
 		if (isset($this->_properties[$property])) {
