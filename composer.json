@@ -1,6 +1,6 @@
 {
   "name":"josegonzalez/cakephp-entity",
-  "version": "1.0.0",
+  "version": "3.0.1",
   "description":"Use model objects/classes instead of arrays in your CakePHP application",
   "type":"cakephp-plugin",
   "keywords":[
