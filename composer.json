@@ -1,5 +1,5 @@
 {
-  "name":"josegonzalez/cakephp-entity",
+  "name":"stephen1807/cakephp-entity",
   "description":"Use model objects/classes instead of arrays in your CakePHP application",
   "type":"cakephp-plugin",
   "keywords":[
@@ -10,13 +10,12 @@
     "model",
     "models"
   ],
-  "homepage":"https://github.com/josegonzalez/cakephp-entity",
+  "homepage":"https://github.com/stephen1807/cakephp-entity",
   "license":"MIT",
   "authors":[
     {
-      "name": "Jose Diaz-Gonzalez",
-      "email": "email@josediazgonzalez.com",
-      "homepage": "http://josediazgonzalez.com",
+      "name": "Stephen Raharja",
+      "email": "stef.stephen.r@gmail.com",
       "role": "Maintainer"
     },
     {
@@ -26,8 +25,8 @@
     }
   ],
   "support":{
-    "source":"https://github.com/josegonzalez/cakephp-entity",
-    "issues":"https://github.com/josegonzalez/cakephp-entity/issues"
+    "source":"https://github.com/stephen1807/cakephp-entity",
+    "issues":"https://github.com/stephen1807/cakephp-entity/issues"
   },
   "require":{
     "php": ">=5.4",
