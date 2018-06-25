@@ -22,7 +22,7 @@ class Table extends AppModel {
 		if (is_array($id)) {
 			$alias = Hash::get($id, 'alias') ?: (Hash::get($id, 'table') ?: $this->alias);
 			$id['alias'] = Inflector::singularize(preg_replace('/Table$/', '', $alias));
-			$this->name = $this->alias = $this->alias($id['alias']);
+			$this->alias = $this->alias($id['alias']);
 			$schema = Hash::get($id, 'schema');
 
 			if ($schema !== null) {
